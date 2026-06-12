@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>115年公務人員特種考試關務人員考試試題與參考答案 - 資料結構</title>
+    
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        body {
+            font-family: "Microsoft JhengHei", "PingFang TC", sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px double #003366;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            font-size: 22px;
+            color: #003366;
+            margin: 10px 0;
+            line-height: 1.5;
+        }
+        .meta-info {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            font-size: 15px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .notice {
+            background-color: #fff9e6;
+            border-left: 4px solid #ffcc00;
+            padding: 15px;
+            font-size: 14px;
+            margin-bottom: 40px;
+            border-radius: 4px;
+        }
+        .question-block {
+            margin-bottom: 50px;
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 30px;
+        }
+        .question-block:last-child {
+            border-bottom: none;
+        }
+        .question-title {
+            font-size: 17px;
+            font-weight: bold;
+            color: #003366;
+            background-color: #e6f2ff;
+            padding: 12px 15px;
+            border-left: 5px solid #0055a5;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        .sub-question {
+            margin-left: 10px;
+            margin-top: 25px;
+        }
+        .sub-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #222;
+        }
+        .answer-box {
+            background-color: #fafafa;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 22px;
+            margin-top: 15px;
+        }
+        .answer-box h4 {
+            margin-top: 0;
+            color: #d9534f;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 8px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .code-snippet {
+            font-family: "Courier New", Courier, monospace;
+            background-color: #f1f1f1;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        pre {
+            background-color: #f8f8f8;
+            border: 1px solid #eaeaea;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 15px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            color: #003366;
+        }
+        .svg-container {
+            text-align: center;
+            margin: 20px 0;
+            background: #fff;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+        }
+        .rbt-red {
+            stroke: red;
+            stroke-width: 2;
+            fill: none;
+        }
+        .rbt-red-inner {
+            stroke: red;
+            stroke-width: 1.5;
+            fill: none;
+        }
+        .rbt-black {
+            stroke: black;
+            stroke-width: 2;
+            fill: none;
+        }
+        .math-center {
+            text-align: center;
+            font-size: 1.05em;
+            margin: 15px 0;
+        }
+        ol, ul {
+            padding-left: 25px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div class="meta-info">
+            <div>代號：10750</div>
+            <div>頁次：2-1</div>
+        </div>
+        <h1>115年公務人員特種考試關務人員、身心障礙人員考試及<br>115年國軍上校以上軍官轉任公務人員考試試題</h1>
+        <div class="meta-info" style="margin-top: 20px;">
+            <div>考試別：關務人員考試</div>
+            <div>等別：三等考試</div>
+            <div>類科：資訊處理（選試英文）</div>
+            <div>科目：資料結構</div>
+        </div>
+        <div class="meta-info" style="justify-content: flex-start; gap: 40px; margin-top: 10px;">
+            <div>考試時間：2小時</div>
+            <div>座號：_________</div>
+        </div>
+    </div>
+
+    <div class="notice">
+        <strong>※ 注意：</strong><br>
+        (一) 禁止使用電子計算器。<br>
+        (二) 不必抄題，作答時請將試題題號及答案依照順序寫在試卷上，於本試題上作答者，不予計分。<br>
+        (三) 本科目得以本國文字或英文作答。
+    </div>
+
+    <div class="question-block">
+        <div class="question-title">
+            一、請以時間複雜度之漸近符號觀念回答下列問題。(一)、(二)題為二個程式片段分別以漸近符號（$\Theta$）與 n 表示其時間複雜度。(時間複雜度之漸近符號分 $O$、$ \Omega$、$\Theta$ 三種，定義不同，(一)、(二)題請以 $\Theta$ 回答)。
+        </div>
+
+        <div class="sub-question">
+            <div class="sub-title">(一) 程式片段如下：(5分)</div>
+<pre>sum = 0;
+for (i = 0; i &lt; n; i = i + 2)
+    for (j = 0; j &lt; i; j++)
+        sum = sum + 1;</pre>
+            
+            <div class="answer-box">
+                <h4>【擬答】</h4>
+                <p><strong>1. 內外迴圈執行次數分析：</strong></p>
+                <ul>
+                    <li>外層迴圈控制變數 <span class="code-snippet">i</span> 從 0 開始，每次遞增 2，其值依序為：$0, 2, 4, 6, \dots$，直到小於 $n$ 的最大偶數。</li>
+                    <li>內層迴圈執行次數由當前的 <span class="code-snippet">i</span> 值決定，精確執行次數為 <span class="code-snippet">i</span> 次。</li>
+                </ul>
+                <p><strong>2. 總執行次數與複雜度計算：</strong></p>
+                <p>假設 $n$ 為偶數，則外層迴圈共執行 $n/2$ 次。內層主要基本操作 <span class="code-snippet">sum = sum + 1</span> 的總執行次數為各次外層迴圈 <span class="code-snippet">i</span> 值的等差級數累加：</p>
+                <div class="math-center">
+                    $$ \sum_{k=0}^{\frac{n}{2}-1} 2k = 2 \cdot \frac{(\frac{n}{2}-1)(\frac{n}{2})}{2} = \frac{n^2}{4} - \frac{n}{2} $$
+                </div>
+                <p>取其最高階項並忽略常數項係數，其漸近時間複雜度為：<strong>$\Theta(n^2)$</strong>。</p>
+            </div>
+        </div>
+
+        <div class="sub-question">
+            <div class="sub-title">(二) 程式片段如下：(5分)</div>
+<pre>sum = 0; i = 0;
+while (i &lt; n) {
+    for (j = i; j &lt;= n; j++)
+        sum = sum + 1;
+    i = i + 1;
+};</pre>
+            
+            <div class="answer-box">
+                <h4>【擬答】</h4>
+                <p><strong>1. 迴圈執行結構分析：</strong></p>
+                <ul>
+                    <li>外層 <span class="code-snippet">while</span> 迴圈：控制變數 <span class="code-snippet">i</span> 從 0 開始，每次加 1，共執行 $n$ 次（$i$ 範圍自 $0$ 至 $n-1$）。</li>
+                    <li>內層 <span class="code-snippet">for</span> 迴圈：當外層變數為 <span class="code-snippet">i</span> 時，內層變數 <span class="code-snippet">j</span> 從 <span class="code-snippet">i</span> 執行到 $n$（含邊界），執行次數為 $(n - i + 1)$ 次。</li>
+                </ul>
+                <p><strong>2. 總執行次數與複雜度計算：</strong></p>
+                <p>將每次外層迴圈對應的內層執行次數進行加總：</p>
+                <div class="math-center">
+                    $$ \sum_{i=0}^{n-1} (n - i + 1) = (n+1) + n + (n-1) + \dots + 2 = \frac{(n+1 + 2) \cdot n}{2} = \frac{n^2 + 3n}{2} $$
+                </div>
+                <p>取其最高階項並忽略低階項與常數，該程式片段之漸近時間複雜度為：<strong>$\Theta(n^2)$</strong>。</p>
+            </div>
+        </div>
+
+        <div class="sub-question">
+            <div class="sub-title">(三) 若甲、乙二種不同演算法可解決同一問題，甲的時間複雜度為 $O(n \log n)$，乙的時間複雜度為 $O(n^2)$。將此二演算法以程式語言實作，請列舉一類型測試資料，並說明其會使甲演算法程式實際執行時間不一定比乙演算法程式實際執行時間快。(10分)</div>
+            
+            <div class="answer-box">
+                <h4>【擬答】</h4>
+                <p>雖然大 $O$ 符號（Big-O）在理論上代表當資料量 $n$ 趨近於無窮大時的漸近上界，但在實際硬體環境與特定測試資料下，甲演算法不一定比乙快。以下列舉兩類常見的測試資料情境說明：</p>
+                
+                <p><strong>1. 測試資料類型一：極小規模的資料量（Small Input Size，$n$ 極小）</strong></p>
+                <ul>
+                    <li><strong>說明：</strong> 演算法的實際執行時間為 $T(n) = c \cdot f(n) + d$，其中 $c$ 為常數倍率（包含指令複雜度、記憶體存取成本），$d$ 為固定初始化成本。甲演算法常數項或低階項可能較大（例如：過多元數據維護或複雜遞迴）。</li>
+                    <li><strong>實例：</strong> 設 $T_{\text{甲}}(n) = 100 \cdot n \log_2 n$，而 $T_{\text{乙}}(n) = 1 \cdot n^2$。當測試資料 $n = 8$ 時：
+                        <ul>
+                            <li>$T_{\text{甲}}(8) = 100 \cdot 8 \cdot 3 = 2400$</li>
+                            <li>$T_{\text{乙}}(8) = 1 \cdot 8^2 = 64$</li>
+                        </ul>
+                        此時乙演算法的實際執行速度遠快於甲演算法。
+                    </li>
+                </ul>
+
+                <p><strong>2. 測試資料類型二：已接近排序完成（Nearly Sorted）的特定排序資料</strong></p>
+                <ul>
+                    <li><strong>說明：</strong> 若甲演算法採用未特別優化的快速排序（Quick Sort，平均 $O(n \log n)$），而乙演算法採用插入排序（Insertion Sort，最差 $O(n^2)$）。</li>
+                    <li><strong>實例：</strong> 當輸入資料為「已完全排序」或「極接近完成排序」的測試數列時，快速排序可能因基準值（Pivot）選擇不當而退化至最差狀況 $O(n^2)$；反之，插入排序面對此類資料能發揮最佳狀況 $O(n)$ 的效能。在此特定測試資料類型下，乙演算法的實際執行時間將會大幅超越甲演算法。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="question-block">
+        <div class="question-title">
+            二、何謂 Complete Binary Tree？假設單一節點的樹其樹高為1，證明若 Complete Binary Tree 含 n 個節點且樹高為 h，則 $2^{h-1} \le n \le 2^h - 1$。(20分)
+        </div>
+        <div class="answer-box">
+            <h4>【擬答】</h4>
+            <p>本題將依申論題標準架構，分為核心定義與數學證明兩部分進行論述：</p>
+            
+            <p><strong>一、 Complete Binary Tree（完全二元樹）之核心定義</strong></p>
+            <p>一棵樹高為 $h$ 的完全二元樹（Complete Binary Tree）必須滿足下列兩點結構約束：</p>
+            <ol>
+                <li>從第 $1$ 層到第 $h-1$ 層的每一層，節點數都必須達到該層的最大容量。即對任意層 $i$ （$1 \le i \le h-1$），其節點數皆為滿載的 $2^{i-1}$ 個。</li>
+                <li>在最後一層（第 $h$ 層）的節點不一定要補滿，但所有節點必須<strong>由左至右</strong>緊密排列，中間絕不可有任何空缺（Gaps）。</li>
+            </ol>
+
+            <p><strong>二、 節點數 $n$ 與樹高 $h$ 關係之數學證明</strong></p>
+            <p>欲證明 $2^{h-1} \le n \le 2^h - 1$，可藉由推導高度為 $h$ 的完全二元樹所能容納的「最多節點數（上界）」與「最少節點數（下界）」來完成證實：</p>
+
+            <p><strong>(一) 上界推導（最多節點數 $n_{\text{max}}$）：</strong></p>
+            <ul>
+                <li>當完全二元樹的第 $h$ 層全部填滿時，該樹結構即等同於「滿二元樹（Full Binary Tree）」，此時擁有該高度下的極大節點數。</li>
+                <li>依二元樹性質，各層之最大節點數形成一等比數列，總和計算如下：
+                    $$ n_{\text{max}} = \sum_{i=1}^{h} 2^{i-1} = 2^0 + 2^1 + 2^2 + \dots + 2^{h-1} = \frac{1 \cdot (2^h - 1)}{2 - 1} = 2^h - 1 $$
+                </li>
+                <li>故在高度 $h$ 的限制下，實際節點數 $n$ 必然滿足：<strong>$n \le 2^h - 1$</strong> &mdash;&mdash; (式1)</li>
+            </ul>
+
+            <p><strong>(二) 下界推導（最少節點數 $n_{\text{min}}$）：</strong></p>
+            <ul>
+                <li>依據定義，高度為 $h$ 的完全二元樹，其第 $1$ 到第 $h-1$ 層必須完全填滿。前 $h-1$ 層的滿載節點總數為：$\sum_{i=1}^{h-1} 2^{i-1} = 2^{h-1} - 1$。</li>
+                <li>為了使樹高確實達到 $h$，最底層（第 $h$ 層）<strong>至少必須包含 1 個節點</strong>。</li>
+                <li>將兩者相加，可得高度為 $h$ 的完全二元樹之極小節點數：
+                    $$ n_{\text{min}} = (2^{h-1} - 1) + 1 = 2^{h-1} $$
+                </li>
+                <li>故在高度 $h$ 的限制下，實際節點數 $n$ 必然滿足：<strong>$2^{h-1} \le n$</strong> &mdash;&mdash; (式2)</li>
+            </ul>
+
+            <p><strong>三、 結論</strong></p>
+            <p>綜合 (式1) 與 (式2) 的邊界條件限制，凡樹高為 $h$ 的 Complete Binary Tree，其節點數 $n$ 必然嚴格落於區間內：</p>
+            <div class="math-center"><strong>$$2^{h-1} \le n \le 2^h - 1$$</strong></div>
+            <p>經由上述極限狀況分析，本題命題得證。</p>
+        </div>
+    </div>
+
+    <div class="question-block">
+        <div class="question-title">
+            三、(一) 請以下圖的 Graph 為例，分別繪出示意圖，說明程式如何以 adjacency matrix 和 adjacency multilist 二種不同資料結構儲存此 Graph。(6分)
+        </div>
+
+        <div class="sub-question">
+            <div class="answer-box">
+                <h4>【擬答】</h4>
+                <p>給定之無向圖（Graph）包含兩個不連通的子圖，頂點集合 $V = \{1,2,3,4,5,6,7,8\}$，邊集合 $E = \{(1,2), (2,3), (3,4), (4,5), (6,7), (7,8)\}$。共計 $n=8, e=6$。</p>
+                
+                <p><strong>1. 相鄰矩陣 (Adjacency Matrix) 儲存示意：</strong></p>
+                <p>使用 $8 \times 8$ 的二維陣列 $A$ 表示。若頂點 $i$ 與頂點 $j$ 存在邊，則 $A[i][j] = A[j][i] = 1$，其餘為 $0$：</p>
+                <table>
+                    <thead>
+                        <tr><th>頂點</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><th>1</th><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><th>2</th><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><th>3</th><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><th>4</th><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><th>5</th><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><th>6</th><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+                        <tr><th>7</th><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+                        <tr><th>8</th><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+                    </tbody>
+                </table>
+
+                <p><strong>2. 相鄰多重串列 (Adjacency Multilist) 儲存示意：</strong></p>
+                <p>無向圖的邊在 Multilist 中僅需一個邊節點代表，格式為：<span class="code-snippet">[ marked | v1 | v2 | link1 | link2 ]</span>。另有頂點目錄指向各自首條邊：</p>
+                <ul>
+                    <li><strong>頂點頭指標：</strong> V1&rarr;E1, V2&rarr;E1, V3&rarr;E2, V4&rarr;E3, V5&rarr;E4, V6&rarr;E5, V7&rarr;E5, V8&rarr;E6</li>
+                    <li><strong>邊節點鏈結結構：</strong>
+                        <ul>
+                            <li><strong>E1 (1, 2):</strong> v1=1, v2=2, link1=null, link2=E2</li>
+                            <li><strong>E2 (2, 3):</strong> v1=2, v2=3, link1=null, link2=E3</li>
+                            <li><strong>E3 (3, 4):</strong> v1=3, v2=4, link1=null, link2=E4</li>
+                            <li><strong>E4 (4, 5):</strong> v1=4, v2=5, link1=null, link2=null</li>
+                            <li><strong>E5 (6, 7):</strong> v1=6, v2=7, link1=null, link2=E6</li>
+                            <li><strong>E6 (7, 8):</strong> v1=7, v2=8, link1=null, link2=null</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="sub-question">
+            <div class="sub-title">(二) 若 Graph 有 n 個節點與 e 個邊，請分別說明並以 Big O 寫出 adjacency matrix 和 adjacency multilist 二種不同資料結構儲存 Graph 時，計算 Graph 中所有節點 Degree 演算法的時間複雜度。(10分)</div>
+            <div class="answer-box">
+                <h4>【擬答】</h4>
+                <p><strong>1. 相鄰矩陣 (Adjacency Matrix)：</strong></p>
+                <ul>
+                    <li><strong>演算法說明：</strong> 矩陣中某一特定節點（第 $i$ 列）的 Degree 數值，即為該列從第 1 行到第 $n$ 行所有正元素（值為1）的加總。若要求出圖中「所有節點」的 Degree，演算法必須完整走訪與掃描此 $n \times n$ 的整格二維陣列。</li>
+                    <li><strong>時間複雜度：</strong> <strong>$O(n^2)$</strong></li>
+                </ul>
+
+                <p><strong>2. 相鄰多重串列 (Adjacency Multilist)：</strong></p>
+                <ul>
+                    <li><strong>演算法說明：</strong> 計算所有節點的 Degree，可維護一個長度為 $n$ 的計數陣列並初始化為 0。接著依序走訪整組多重串列中所有的邊節點（共 $e$ 個）。每讀取到一個邊節點，便將其內含的兩個端點欄位 $v1$ 與 $v2$ 於計數陣列中對應的位置加 1。走訪結束後，陣列即為所有節點的 Degree。</li>
+                    <li><strong>時間複雜度：</strong> <strong>$O(n + e)$</strong> （初始化計數器耗時 $O(n)$，線性走訪所有邊節點耗時 $O(e)$）。</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="sub-question">
+            <div class="sub-title">(三) 若 Graph 有 n 個節點與 e 個邊，請分別以 Big O 寫出以 adjacency matrix 和 adjacency multilist 二種不同資料結構儲存 Graph 空間複雜度。比較且說明兩者在空間複雜度的優劣。(14分)</div>
+            <div class="answer-box">
+                <h4>【擬答】</h4>
+                <p>本題依標準架構，針對兩資料結構之空間分配進行量化分析與優劣對比：</p>
+                
+                <p><strong>一、 空間複雜度量化評估</strong></p>
+                <ul>
+                    <li><strong>相鄰矩陣 (Adjacency Matrix)：</strong> 無論圖中實際包含多少邊數 $e$，皆必須配置一塊固定的 $n \times n$ 的記憶體二維空間。其總空間複雜度為：<strong>$O(n^2)$</strong>。</li>
+                    <li><strong>相鄰多重串列 (Adjacency Multilist)：</strong> 所需記憶體空間由兩部分構成：一個長度為 $n$ 的頂點一維陣列，以及與邊數完全對等的 $e$ 個邊節點結構（各節點具固定數量的指標欄位）。總空間複雜度為：<strong>$O(n + e)$</strong>。</li>
+                </ul>
+
+                <p><strong>二、 空間複雜度之優劣比較分析</strong></p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>圖形結構密度分類</th>
+                            <th>相鄰矩陣空間 ($O(n^2)$)</th>
+                            <th>相鄰多重串列空間 ($O(n + e)$)</th>
+                            <th>空間配置優劣關鍵說明</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>稀疏圖 (Sparse Graph)<br>其邊數條件满足 $e \ll n^2$</strong></td>
+                            <td>記憶體配置：劣</td>
+                            <td><strong>記憶體配置：優（勝出）</strong></td>
+                            <td>在此類圖形中，矩陣內將充斥著大量的無效元素（零值），造成極大記憶體浪費。反之，多重串列空間與邊數成線性正比，能極大化節省儲存開銷。</td>
+                        </tr>
+                        <tr>
+                            <td><strong>稠密圖 (Dense Graph)<br>其邊數條件满足 $e \approx \frac{n(n-1)}{2}$</strong></td>
+                            <td><strong>記憶體配置：優（勝出）</strong></td>
+                            <td>記憶體配置：劣</td>
+                            <td>當邊數逼近最大極限值時，多重串列中各個邊節點所附加的多個指針變數開銷（Pointer Overhead常數大），其總位元組數會反超矩陣單純使用 0 與 1 儲存的空間。矩陣在此情境更具優勢。</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="question-block">
+        <div class="question-title">
+            四、(一) 從空集合開始，依下列數字串 1,2,3,4,5,6,7,8 順序插入節點建立並繪出 Binary Search Tree。(5分)
+        </div>
+        <div class="answer-box">
+            <h4>【擬答】</h4>
+            <p><strong>1. 建立過程說明：</strong> 二元搜尋樹（BST）之插入邏輯為「大於當前節點者置於右子樹，小於者置於左子樹」。由於給定數列為由小至大的嚴格遞增序列 $1,2,3,4,5,6,7,8$，後續插入的每個節點均比前一個節點大，故節點會不斷朝右側斜下延伸，最終退化為一棵右歪斜樹（Right-Skewed Tree）。</p>
+            <p><strong>2. BST 結構圖示意：</strong></p>
+            <div class="svg-container">
+                <svg width="220" height="340">
+                    <circle cx="30" cy="20" r="14" fill="none" stroke="black" stroke-width="2"/>
+                    <text x="30" y="25" text-anchor="middle" font-size="14">1</text>
+                    <line x1="40" y1="30" x2="65" y2="55" stroke="black" stroke-width="1.5"/>
+                    
+                    <circle cx="75" cy="65" r="14" fill="none" stroke="black" stroke-width="2"/>
+                    <text x="75" y="70" text-anchor="middle" font-size="14">2</text>
+                    <line x1="85" y1="75" x2="110" y2="100" stroke="black" stroke-width="1.5"/>
+
+                    <circle cx="120" cy="110" r="14" fill="none" stroke="black" stroke-width="2"/>
+                    <text x="120" y="115" text-anchor="middle" font-size="14">3</text>
+                    <line x1="130" y1="120" x2="155" y2="145" stroke="black" stroke-width="1.5"/>
+
+                    <circle cx="165" cy="155" r="14" fill="none" stroke="black" stroke-width="2"/>
+                    <text x="165" y="160" text-anchor="middle" font-size="14">4</text>
+                    <line x1="170" y1="169" x2="180" y2="189" stroke="black" stroke-width="1.5"/>
+
+                    <circle cx="185" cy="200" r="14" fill="none" stroke="black" stroke-width="2"/>
+                    <text x="185" y="205" text-anchor="middle" font-size="14">5</text>
+                    <line x1="190" y1="214" x2="195" y2="234" stroke="black" stroke-width="1.5"/>
+
+                    <circle cx="200" cy="245" r="14" fill="none" stroke="black" stroke-width="2"/>
+                    <text x="200" y="250" text-anchor="middle" font-size="14">6</text>
+                    
+                    <text x="205" y="280" text-anchor="middle" font-size="20" font-weight="bold">:</text>
+                    <text x="205" y="315" text-anchor="middle" font-size="13" fill="#666">(右歪斜至8)</text>
+                </svg>
+            </div>
+        </div>
+
+        <div class="sub-question">
+            <div class="sub-title">(二) 從空集合開始，依下列數字串 1,2,3,4,5,6,7,8 順序插入節點建立並繪出 Red Black Tree。(紅色節點請以雙線同心圓表示；黑色節點請以單線圓表示)。(13分)</div>
+            <div class="answer-box">
+                <h4>【擬答】</h4>
+                <p><strong>1. 平衡調整關鍵步驟演繹：</strong></p>
+                <ul>
+                    <li>插入 1（黑）、2（紅）後，再插入 3（紅）會引發紅紅衝突。經左旋調整，根改為 2（黑），其左右子節點 1、3 改為（紅）。</li>
+                    <li>依此自平衡核心規範（任何紅節點之子節點必須為黑、各條路徑上黑節點數等高）持續進行旋轉與變色平衡調整。</li>
+                </ul>
+                <p><strong>2. 最終平衡後之紅黑樹結構圖（單線圓為黑色，雙線同心圓為紅色）：</strong></p>
+                <div class="svg-container">
+                    <svg width="520" height="240">
+                        <circle cx="260" cy="30" r="18" class="rbt-black"/>
+                        <text x="260" y="35" text-anchor="middle" font-weight="bold">4</text>
+                        <line x1="245" y1="42" x2="155" y2="78" stroke="black"/>
+                        <line x1="275" y1="42" x2="365" y2="78" stroke="black"/>
+
+                        <circle cx="140" cy="90" r="18" class="rbt-black"/>
+                        <text x="140" y="95" text-anchor="middle">2</text>
+                        <line x1="128" y1="104" x2="82" y2="146" stroke="black"/>
+                        <line x1="152" y1="104" x2="198" y2="146" stroke="black"/>
+
+                        <circle cx="380" cy="90" r="18" class="rbt-black"/>
+                        <text x="380" y="95" text-anchor="middle">6</text>
+                        <line x1="368" y1="104" x2="322" y2="146" stroke="black"/>
+                        <line x1="392" y1="104" x2="438" y2="146" stroke="black"/>
+
+                        <circle cx="70" cy="160" r="18" class="rbt-black"/>
+                        <text x="70" y="165" text-anchor="middle">1</text>
+
+                        <circle cx="210" cy="160" r="18" class="rbt-black"/>
+                        <text x="210" y="165" text-anchor="middle">3</text>
+
+                        <circle cx="310" cy="160" r="18" class="rbt-black"/>
+                        <text x="310" y="165" text-anchor="middle">5</text>
+
+                        <circle cx="450" cy="160" r="18" class="rbt-red"/>
+                        <circle cx="450" cy="160" r="14" class="rbt-red-inner"/>
+                        <text x="450" y="165" text-anchor="middle" fill="red" font-weight="bold">7</text>
+                        <line x1="462" y1="174" x2="488" y2="206" stroke="black"/>
+
+                        <circle cx="500" cy="220" r="18" class="rbt-red"/>
+                        <circle cx="500" cy="220" r="14" class="rbt-red-inner"/>
+                        <text x="500" y="225" text-anchor="middle" fill="red" font-weight="bold">8</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="sub-question">
+            <div class="sub-title">(三) 請分別說明 Binary Search Tree 與 Red Black Tree 在插入、刪除與搜尋數字等三操作的時間複雜度。(12分)</div>
+            <div class="answer-box">
+                <h4>【擬答】</h4>
+                <p>兩資料結構於基本操作之漸近時間複雜度（以大 $O$ 符號表示）全面對比與分析如下：</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>核心資料結構</th>
+                            <th>操作效能情境分類</th>
+                            <th>搜尋 (Search)</th>
+                            <th>插入 (Insertion)</th>
+                            <th>刪除 (Deletion)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td rowspan="2"><strong>Binary Search Tree (BST)</strong></td>
+                            <td>平均狀況 (Average Case)</td>
+                            <td>$O(\log n)$</td>
+                            <td>$O(\log n)$</td>
+                            <td>$O(\log n)$</td>
+                        </tr>
+                        <tr>
+                            <td>最差狀況 (Worst Case)</td>
+                            <td><strong>$O(n)$</strong></td>
+                            <td><strong>$O(n)$</strong></td>
+                            <td><strong>$O(n)$</strong></td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2"><strong>Red Black Tree (RBT)</strong></td>
+                            <td>平均狀況 (Average Case)</td>
+                            <td>$O(\log n)$</td>
+                            <td>$O(\log n)$</td>
+                            <td>$O(\log n)$</td>
+                        </tr>
+                        <tr>
+                            <td>最差狀況 (Worst Case)</td>
+                            <td><strong>$O(\log n)$</strong></td>
+                            <td><strong>$O(\log n)$</strong></td>
+                            <td><strong>$O(\log n)$</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p><strong>核心原理與結構分析：</strong></p>
+                <ul>
+                    <li><strong>二元搜尋樹 (BST)：</strong> 操作耗時完全取決於樹的高度。在隨機數值輸入下，樹高能保持在 $O(\log n)$；但若遭遇如本題第(一)小題之**完全遞增或遞減的極端輸入序列**，其結構將徹底退化為與單向鏈結串列無異的歪斜樹，導致搜尋、插入與刪除之最差時間複雜度皆劇烈退化至 <strong>$O(n)$</strong>。</li>
+                    <li><strong>紅黑樹 (RBT)：</strong> 屬於具備自平衡機制的自平衡二元搜尋樹。其內部透過紅黑五大性質嚴格制約，保證樹中「最長路徑不超過最短路徑的兩倍」。是以，即便遭遇連續遞增等最極端的測試資料，其內部依然能藉由 $O(1)$ 次的旋轉與重繪將整體樹高永久鎖定在 $O(\log n)$ 層。故其三大基本操作不論在平均或最差狀況下，其時間複雜度皆能穩定地控制在極其高效的 <strong>$O(\log n)$</strong>，具備強健的防退化保護。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
