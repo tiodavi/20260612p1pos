@@ -9,17 +9,14 @@ from psycopg2.extras import RealDictCursor
 app = Flask(__name__)
 
 # --- 資料庫連線設定 ---
-# 提示：在本機測試時，請將 Neon 的 Connection String 放入環境變數或直接貼在下方
 DATABASE_URL = os.environ.get('DATABASE_URL', 'your_neon_database_url_here')
 
 def get_db_connection():
-    # 建立連線，並設定回傳字典格式的資料
     conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     return conn
 
-# --- 初始化資料庫表（若不存在則自動建立） ---
+# --- 初始化資料庫表 ---
 def init_db():
-    # 預設的商品資料（Hello Kitty 聯名服飾系列）
     default_products = [
         {"name": "Kitty 經典刺繡大學T", "price": 1580, "category": "上衣"},
         {"name": "甜蜜粉紅蝴蝶結百褶裙", "price": 1280, "category": "下著"},
@@ -32,7 +29,6 @@ def init_db():
         conn = get_db_connection()
         cur = conn.cursor()
         
-        # 1. 建立商品表
         cur.execute('''
             CREATE TABLE IF NOT EXISTS products (
                 id SERIAL PRIMARY KEY,
@@ -42,7 +38,6 @@ def init_db():
             );
         ''')
         
-        # 2. 建立訂單表
         cur.execute('''
             CREATE TABLE IF NOT EXISTS orders (
                 id SERIAL PRIMARY KEY,
@@ -54,7 +49,6 @@ def init_db():
             );
         ''')
         
-        # 檢查是否需要匯入預設商品
         cur.execute("SELECT COUNT(*) FROM products;")
         if cur.fetchone()[0] == 0:
             for p in default_products:
@@ -68,11 +62,14 @@ def init_db():
     except Exception as e:
         print(f"資料庫初始化失敗: {e}")
 
-# 在 App 啟動時或第一次請求時初始化資料庫
-with app.app_context():
-    # 如果 DATABASE_URL 還沒設定，先跳過避免報錯
-    if 'your_neon_database_url' not in DATABASE_URL:
-        init_db()
+# 【修正點 2】: 改用 before_request 機制，避免 Vercel 建置期因缺少環境變數而崩潰
+@app.before_request
+def initialize_app():
+    # 使用 global 變數確保只初始化一次，提高效能
+    if not getattr(app, '_got_first_request', False):
+        if 'your_neon_database_url' not in DATABASE_URL:
+            init_db()
+        app._got_first_request = True
 
 # --- 轉盤獎項定義 ---
 LUCKY_WHEEL_OPTIONS = [
@@ -84,10 +81,9 @@ LUCKY_WHEEL_OPTIONS = [
     {"id": 6, "text": "再接再厲 (不折價)", "type": "none", "value": 0}
 ]
 
-# --- 路由與首頁 (Hello Kitty POS 介面) ---
+# --- 路由與首頁 ---
 @app.route('/')
 def index():
-    # 從資料庫撈取商品列表
     products = []
     try:
         conn = get_db_connection()
@@ -98,10 +94,8 @@ def index():
         conn.close()
     except Exception as e:
         print(f"撈取商品失敗: {e}")
-        # 備用防呆資料
         products = [{"id":1, "name":"[未連線資料庫] 測試商品", "price": 3200, "category":"測試"}]
 
-    # 用 HTML 模板字串渲染，方便單一 app.py 獨立運作
     html_template = """
     <!DOCTYPE html>
     <html lang="zh-TW">
@@ -115,7 +109,7 @@ def index():
             @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Noto+Sans+TC:wght@400;700&display=swap');
             body {
                 font-family: 'Noto Sans TC', sans-serif;
-                background-color: #FFF0F5; /* 薰衣草粉紅底色 */
+                background-color: #FFF0F5; 
                 background-image: radial-gradient(#FFB6C1 10%, transparent 11%), radial-gradient(#FFB6C1 10%, transparent 11%);
                 background-size: 30px 30px;
                 background-position: 0 0, 15px 15px;
@@ -137,7 +131,6 @@ def index():
                 transform: translateY(4px);
                 box-shadow: 0 0px 0 #C71585;
             }
-            /* 幸運轉盤樣式 */
             .wheel-container {
                 position: relative;
                 width: 300px;
@@ -195,7 +188,6 @@ def index():
         </div>
 
         <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
-            
             <div class="lg:col-span-2 kitty-card p-6">
                 <h2 class="text-xl font-bold text-pink-700 mb-4 border-b-2 border-pink-200 pb-2">
                     <i class="fa-solid fa-shirt"></i> 聯名服飾商品清單
@@ -223,7 +215,6 @@ def index():
                         <span><i class="fa-solid fa-cart-shopping"></i> 購物車清單</span>
                         <button onclick="clearCart()" class="text-xs text-pink-400 hover:text-pink-600">清空</button>
                     </h2>
-                    
                     <div id="cart-items" class="space-y-3 max-h-[250px] overflow-y-auto pr-1">
                         <p class="text-gray-400 text-center py-8">購物車空空的，快去選購 Kitty 服飾吧 🐾</p>
                     </div>
@@ -234,11 +225,9 @@ def index():
                         <span>商品原始總額:</span>
                         <span id="summary-original" class="font-bold">$0</span>
                     </div>
-                    
                     <div id="wheel-status-box" class="bg-pink-50 border border-pink-200 rounded-lg p-2 text-xs text-center text-pink-600 hidden">
                         <span id="wheel-status-text">🎉 已達 $3,000 門檻！獲得一次抽獎機會！</span>
                     </div>
-
                     <div class="flex justify-between text-gray-700">
                         <span>套用抽獎獎項:</span>
                         <span id="summary-discount-name" class="text-pink-500 font-bold">未使用</span>
@@ -266,8 +255,7 @@ def index():
                 
                 <div class="wheel-container mb-6">
                     <div class="wheel-pointer"></div>
-                    <div id="wheel-element" class="wheel">
-                        </div>
+                    <div id="wheel-element" class="wheel"></div>
                 </div>
 
                 <button id="spin-btn" onclick="startSpinning()" class="kitty-btn w-full py-3 text-lg font-bold">
@@ -308,8 +296,7 @@ def index():
                                     <th class="p-2">最終實收</th>
                                 </tr>
                             </thead>
-                            <tbody id="report-table-body" class="divide-y divide-gray-100">
-                                </tbody>
+                            <tbody id="report-table-body" class="divide-y divide-gray-100"></tbody>
                         </table>
                     </div>
                 </div>
@@ -321,13 +308,12 @@ def index():
 
         <script>
             let cart = [];
-            let luckyWheelReward = null; // 用來記錄抽中的獎項
-            let wheelUsed = false;       // 是否已執行過抽獎
+            let luckyWheelReward = null; 
+            let wheelUsed = false;       
 
-            // 獎項清單（與後端一致，供前端轉盤文字渲染）
-            const options = """ + json.dumps(LUCKY_WHEEL_OPTIONS, ensure_ascii=False) + """;
+            // 【修正點 1】: 使用 Flask 的 tojson 安全過濾器，完美解決 JS 接收 Python 物件引號爆炸的問題
+            const options = {{ wheel_options | tojson | safe }};
 
-            // 初始化轉盤文字與角度
             const wheelEl = document.getElementById('wheel-element');
             options.forEach((opt, idx) => {
                 const angle = idx * 60;
@@ -338,7 +324,6 @@ def index():
                 wheelEl.appendChild(textDiv);
             });
 
-            // 1. 新增商品至購物車
             function addToCart(id, name, price) {
                 const existing = cart.find(item => item.id === id);
                 if (existing) {
@@ -349,7 +334,6 @@ def index():
                 updateCartUI();
             }
 
-            // 2. 變更數量
             function changeQuantity(id, delta) {
                 const item = cart.find(item => item.id === id);
                 if (item) {
@@ -361,16 +345,17 @@ def index():
                 updateCartUI();
             }
 
-            // 3. 清空購物車
             function clearCart() {
                 cart = [];
                 luckyWheelReward = null;
                 wheelUsed = false;
                 document.getElementById('wheel-element').style.transform = 'rotate(0deg)';
+                const spinBtn = document.getElementById('spin-btn');
+                spinBtn.disabled = false;
+                spinBtn.innerText = '✨ 啟動魔法轉盤 ✨';
                 updateCartUI();
             }
 
-            // 4. 更新購物車與金額的 UI 計算
             function updateCartUI() {
                 const container = document.getElementById('cart-items');
                 if (cart.length === 0) {
@@ -382,7 +367,6 @@ def index():
                     return;
                 }
 
-                // 渲染項目
                 container.innerHTML = cart.map(item => `
                     <div class="flex justify-between items-center p-2 bg-white rounded-xl border border-pink-100 shadow-xs">
                         <div class="max-w-[150px]">
@@ -397,25 +381,21 @@ def index():
                     </div>
                 `).join('');
 
-                // 計算原始總價
                 const originalTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
                 document.getElementById('summary-original').innerText = `$${originalTotal}`;
 
-                // 滿 3000 促銷邏輯判斷
                 const statusBox = document.getElementById('wheel-status-box');
                 if (originalTotal >= 3000) {
                     statusBox.classList.remove('hidden');
                     if (!wheelUsed) {
-                        // 自動彈出抽獎轉盤
                         document.getElementById('wheel-modal').style.display = 'flex';
                     }
                 } else {
                     statusBox.classList.add('hidden');
-                    luckyWheelReward = null; // 不滿額自動失效
+                    luckyWheelReward = null; 
                     wheelUsed = false;
                 }
 
-                // 計算最終折扣價
                 let finalTotal = originalTotal;
                 if (luckyWheelReward && originalTotal >= 3000) {
                     document.getElementById('summary-discount-name').innerText = luckyWheelReward.text;
@@ -431,25 +411,20 @@ def index():
                 document.getElementById('summary-final').innerText = `$${finalTotal}`;
             }
 
-            // 5. 執行啟動轉盤
             function startSpinning() {
                 if (wheelUsed) return;
                 wheelUsed = true;
                 document.getElementById('spin-btn').disabled = true;
                 document.getElementById('spin-btn').innerText = '魔法使勁旋轉中...';
 
-                // 打開後端提供的隨機抽獎 API 確保公平與數據安全
                 fetch('/api/spin')
                     .then(res => res.json())
                     .then(data => {
                         luckyWheelReward = data.reward;
                         const index = options.findIndex(o => o.id === luckyWheelReward.id);
-                        
-                        // 計算旋轉度數 (基礎5圈 1800度 + 逆向對準指針角度)
                         const degrees = 1800 + (360 - (index * 60));
                         wheelEl.style.transform = `rotate(${degrees}deg)`;
 
-                        // 轉盤動畫結束 (4000 毫秒)
                         setTimeout(() => {
                             alert(`✨ 恭喜抽中：【${luckyWheelReward.text}】！✨`);
                             document.getElementById('wheel-modal').style.display = 'none';
@@ -458,7 +433,6 @@ def index():
                     });
             }
 
-            // 6. 送出結帳到後台
             function processCheckout() {
                 if (cart.length === 0) {
                     alert('購物車沒有衣服可以結帳唷！');
@@ -489,7 +463,6 @@ def index():
                 });
             }
 
-            // 7. 後台報表視窗與 API 載入
             function openReportModal() {
                 document.getElementById('report-modal').style.display = 'flex';
                 fetch('/api/reports')
@@ -523,7 +496,8 @@ def index():
     </body>
     </html>
     """
-    return render_template_string(html_template, products=products)
+    # 【配合修正點 1】: 渲染時將 LUCKY_WHEEL_OPTIONS 作為變數傳入
+    return render_template_string(html_template, products=products, wheel_options=LUCKY_WHEEL_OPTIONS)
 
 # --- API 1：安全隨機抽取轉盤獎項 ---
 @app.route('/api/spin', methods=['GET'])
@@ -542,7 +516,6 @@ def api_checkout():
         conn = get_db_connection()
         cur = conn.cursor()
         
-        # 插入訂單紀錄
         cur.execute('''
             INSERT INTO orders (order_date, original_total, discount_name, final_total, items)
             VALUES (%s, %s, %s, %s, %s);
@@ -568,11 +541,9 @@ def api_reports():
         conn = get_db_connection()
         cur = conn.cursor(cursor_factory=RealDictCursor)
         
-        # 1. 撈取所有歷史訂單（限最新 100 筆流水帳）
         cur.execute("SELECT id, to_char(order_date, 'YYYY-MM-DD HH24:MI') as order_date, original_total, discount_name, final_total FROM orders ORDER BY id DESC LIMIT 100;")
         orders = cur.fetchall()
         
-        # 2. 統計關鍵指標
         cur.execute("SELECT SUM(final_total) as total_revenue, COUNT(*) as total_orders, ROUND(AVG(final_total)) as avg_order FROM orders;")
         metrics = cur.fetchone()
         
@@ -589,6 +560,5 @@ def api_reports():
     except Exception as e:
         return jsonify({"orders": [], "summary": {"total_revenue": 0, "total_orders": 0, "avg_order": 0}, "error": str(e)}), 500
 
-# WSGI 生產環境進入點
 if __name__ == '__main__':
     app.run(debug=True)
